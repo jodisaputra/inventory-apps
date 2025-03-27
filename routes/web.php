@@ -31,7 +31,7 @@ Route::post('/welcome', [WelcomeController::class, 'storeDecision'])->name('welc
 
 // Dashboard and other authenticated routes
 Route::middleware(['auth', 'web'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Redirect /home to dashboard
     Route::get('/home', function () {
@@ -44,9 +44,12 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // User management
     Route::resource('users', UserManagementController::class);
 
     // Role management
     Route::resource('roles', RoleController::class);
+    Route::post('/delete-permission', 'App\Http\Controllers\RoleController@deletePermission')->name('delete.permission');
+    Route::post('/update-permission', 'App\Http\Controllers\RoleController@updatePermission')->name('update.permission');
 });

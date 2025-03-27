@@ -119,60 +119,75 @@
                 </div>
 
                 <!-- Sidebar Menu -->
+                <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
+                        <!-- Dashboard -->
                         <li class="nav-item">
-                            <a href="{{ url('/home') }}"
-                                class="nav-link {{ request()->is('home') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard') }}"
+                                class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
+
+                        <!-- Stores -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    User Management
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
+                            <a href="{{ route('stores.create') }}"
+                                class="nav-link {{ request()->routeIs('stores.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-store"></i>
+                                <p>Stores</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Users</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Roles</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Permissions</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+
+                        <!-- Admin Section -->
+                        @role('admin')
+                            <li class="nav-header">ADMINISTRATION</li>
+
+                            <!-- User Management -->
+                            <li
+                                class="nav-item {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'menu-open' : '' }}">
+                                <a href="#"
+                                    class="nav-link {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        User Management
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('users.index') }}"
+                                            class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Users</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('roles.index') }}"
+                                            class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Roles</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
+
+                        <!-- Settings -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-cog"></i>
-                                <p>
-                                    Settings
-                                </p>
+                                <p>Settings</p>
                             </a>
                         </li>
-                        <li class="nav-header">EXAMPLES</li>
+
+                        <!-- Profile -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-calendar-alt"></i>
-                                <p>
-                                    Calendar
-                                </p>
+                                <i class="nav-icon fas fa-user-circle"></i>
+                                <p>My Profile</p>
                             </a>
                         </li>
                     </ul>

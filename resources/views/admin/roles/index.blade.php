@@ -24,9 +24,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>#</th>
                                 <th>Name</th>
-                                <th>Permissions</th>
+                                <th style="width: 30%;">Permissions</th>
                                 <th>Users Count</th>
                                 <th>Actions</th>
                             </tr>
@@ -34,16 +34,16 @@
                         <tbody>
                             @foreach ($roles as $role)
                                 <tr>
-                                    <td>{{ $role->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>
-                                        @foreach ($role->permissions->take(3) as $permission)
+                                        @foreach ($role->permissions as $permission)
                                             <span class="badge badge-info">{{ $permission->name }}</span>
                                         @endforeach
-                                        @if ($role->permissions->count() > 3)
+                                        {{-- @if ($role->permissions->count() > 3)
                                             <span class="badge badge-secondary">+{{ $role->permissions->count() - 3 }}
                                                 more</span>
-                                        @endif
+                                        @endif --}}
                                     </td>
                                     <td>{{ $role->users->count() }}</td>
                                     <td>

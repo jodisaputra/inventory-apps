@@ -16,7 +16,11 @@ class UserManagementController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'role:admin']);
+        $this->middleware(['auth']);
+        $this->middleware(['permission:view users'])->only(['index', 'show']);
+        $this->middleware(['permission:create users'])->only(['create', 'store']);
+        $this->middleware(['permission:edit users'])->only(['edit', 'update']);
+        $this->middleware(['permission:delete users'])->only(['destroy']);
     }
 
     /**
@@ -26,7 +30,7 @@ class UserManagementController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::with(['roles.permissions', 'store'])->get();
         return view('admin.users.index', compact('users'));
     }
 
