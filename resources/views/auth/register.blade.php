@@ -3,74 +3,51 @@
 @section('title', 'Register')
 
 @section('content')
-    <p class="login-box-msg">Register a new membership</p>
-
-    <form method="POST" action="{{ route('register') }}">
+    <!-- registration form -->
+    <form action="{{ route('register') }}" method="POST" class="sign__form">
         @csrf
+        <a href="{{ url('/') }}" class="sign__logo">
+            <img src="{{ asset('img/logo.svg') }}" alt="{{ config('app.name') }}">
+        </a>
 
-        <div class="input-group mb-3">
-            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                value="{{ old('name') }}" placeholder="Full name" required autocomplete="name" autofocus>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user"></span>
-                </div>
-            </div>
+        <div class="sign__group">
+            <input id="name" type="text" class="sign__input @error('name') is-invalid @enderror" name="name"
+                value="{{ old('name') }}" placeholder="Name" required autocomplete="name" autofocus>
             @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+                <span class="text-danger" role="alert">
+                    {{ $message }}
                 </span>
             @enderror
         </div>
 
-        <div class="input-group mb-3">
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+        <div class="sign__group">
+            <input id="email" type="text" class="sign__input @error('email') is-invalid @enderror" name="email"
                 value="{{ old('email') }}" placeholder="Email" required autocomplete="email">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-envelope"></span>
-                </div>
-            </div>
             @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+                <span class="text-danger" role="alert">
+                    {{ $message }}
                 </span>
             @enderror
         </div>
 
-        <div class="input-group mb-3">
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+        <div class="sign__group">
+            <input id="password" type="password" class="sign__input @error('password') is-invalid @enderror"
                 name="password" placeholder="Password" required autocomplete="new-password">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-            </div>
             @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+                <span class="text-danger" role="alert">
+                    {{ $message }}
                 </span>
             @enderror
         </div>
 
-        <div class="input-group mb-3">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                placeholder="Confirm password" required autocomplete="new-password">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-            </div>
+        <div class="sign__group">
+            <input id="password-confirm" type="password" class="sign__input" name="password_confirmation"
+                placeholder="Confirm Password" required autocomplete="new-password">
         </div>
 
-        <div class="row">
-            <!-- /.col -->
-            <div class="col-12 mx-auto mb-3">
-                <button type="submit" class="btn btn-primary btn-block">{{ __('Register') }}</button>
-            </div>
-            <!-- /.col -->
-        </div>
+        <button class="sign__btn" type="submit">Sign up</button>
+
+        <span class="sign__text">Already have an account? <a href="{{ route('login') }}">Sign in!</a></span>
     </form>
-
-    <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
+    <!-- end registration form -->
 @endsection
