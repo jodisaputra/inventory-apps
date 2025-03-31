@@ -1,12 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::post('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
 
 // Welcome screen for new users - already protected with auth middleware in controller
 Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
@@ -31,7 +33,7 @@ Route::post('/welcome', [WelcomeController::class, 'storeDecision'])->name('welc
 
 // Dashboard and other authenticated routes
 Route::middleware(['auth', 'web'])->group(function () {
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Redirect /home to dashboard
     Route::get('/home', function () {
@@ -44,7 +46,6 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // User management
     Route::resource('users', UserManagementController::class);
 
